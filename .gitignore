@@ -3,3 +3,5 @@
 /lefthook.yml
 /.conform.yaml
 /treefmt.toml
+
+.data
