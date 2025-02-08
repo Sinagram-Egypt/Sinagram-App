@@ -1,0 +1,3 @@
+[submodule "api"]
+	path = packages/api
+	url = git@github.com:AlGhoul-Inc/Sinagram-tRPC-API.git
