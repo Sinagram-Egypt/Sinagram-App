@@ -2,7 +2,8 @@
   description = "A web/cross-platform (mobile) app mono repo, hosting a social type app.";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs?rev=4aa36568d413aca0ea84a1684d2d46f55dbabad7";
+    nixgl.url = "github:guibou/nixGL";
     std = {
       url = "github:divnix/std";
       inputs = {
@@ -30,6 +31,10 @@
     std.growOn {
       inherit inputs;
       cellsFrom = ./nix;
+      nixpkgsConfig = {
+        allowUnfree = true;
+        android_sdk.accept_license = true;
+      };
       cellBlocks = with std.blockTypes; [
         (nixago "configs")
         (devshells "shells")

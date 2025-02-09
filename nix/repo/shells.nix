@@ -40,6 +40,7 @@ in
         }
 
         {package = inputs.nixpkgs.nodejs;}
+        {package = inputs.nixpkgs.yarn;}
 
         {
           # Expose platform tools (aka adb & other executables)
