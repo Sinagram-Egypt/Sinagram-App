@@ -1,0 +1,35 @@
+{
+  "name": "@repo/db",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Database schema/client for sinagram.",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
+  },
+  "keywords": [
+    "Drizzle",
+    "Database"
+  ],
+  "author": "Al-Ghoul",
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "drizzle-kit": "^0.30.4",
+    "eslint": "^9.19.0",
+    "typescript": "5.7.3"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.39.2",
+    "postgres": "^3.4.5"
+  },
+  "exports": {
+    ".": "./index.ts",
+    "./schema": "./src/schemas/schemas.ts"
+  }
+}
