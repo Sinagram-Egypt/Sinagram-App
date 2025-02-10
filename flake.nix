@@ -38,6 +38,7 @@
       cellBlocks = with std.blockTypes; [
         (nixago "configs")
         (devshells "shells")
+        (arion "arion-compose")
       ];
     } {
     };
