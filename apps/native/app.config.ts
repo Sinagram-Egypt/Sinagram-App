@@ -10,6 +10,7 @@ const config: ExpoConfig = {
   newArchEnabled: true,
   ios: {
     supportsTablet: true,
+    bundleIdentifier: "com.alghoul.sinagram",
   },
   android: {
     adaptiveIcon: {
