@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import {
-  createUserInputSchema,
-  createUserInput,
+   createAccountInputSchema,
+  CreateAccountInput,
 } from "@repo/api/src/db/types/inputSchemas";
 import { View, Text } from "react-native";
 import { Input, InputField } from "@/components/ui/input";
@@ -12,20 +12,11 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { toast } from "sonner-native";
 
 export default function HomeScreen() {
-  const register = trpc.register.useMutation({
-    onError: (error) => {
-      console.log(error.message);
-
-      toast.error(error.message);
-    },
-  });
-
   const {
     control: registerControl,
     handleSubmit: registerHandleSubmit,
     formState: { errors: registerErrors },
-    setError: setRegisterError,
-  } = useForm<createUserInput>({
+  } = useForm<CreateAccountInput>({
     values: {
       email: "Abdo.AlGhouul@gmail.com",
       username: "Abdo.AlGhoul",
@@ -34,7 +25,12 @@ export default function HomeScreen() {
       password: "12345678",
       confirmPassword: "12345678",
     },
-    resolver: zodResolver(createUserInputSchema),
+    resolver: zodResolver(createAccountInputSchema),
+  });
+
+  const register = trpc.register.useMutation({
+    onError: (error) => toast.error(error.message),
+    onSuccess: () => toast.success("Account created successfully"),
   });
 
   return (
@@ -137,6 +133,58 @@ export default function HomeScreen() {
         {registerErrors.last_name ? (
           <Text className="text-red-500 text-center">
             {registerErrors.last_name.message}
+          </Text>
+        ) : null}
+
+        <Controller
+          control={registerControl}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input>
+              <InputField
+                id="password"
+                className="w-full border border-gray-400 p-2 rounded-lg"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+                secureTextEntry
+                placeholder="Password"
+              />
+            </Input>
+          )}
+          name="password"
+        />
+        {registerErrors.password ? (
+          <Text className="text-red-500 text-center">
+            {registerErrors.password.message}
+          </Text>
+        ) : null}
+
+        <Controller
+          control={registerControl}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input>
+              <InputField
+                id="confirmPassword"
+                className="w-full border border-gray-400 p-2 rounded-lg"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+                secureTextEntry
+                placeholder="Confirm Password"
+              />
+            </Input>
+          )}
+          name="confirmPassword"
+        />
+        {registerErrors.confirmPassword ? (
+          <Text className="text-red-500 text-center">
+            {registerErrors.confirmPassword.message}
           </Text>
         ) : null}
 
