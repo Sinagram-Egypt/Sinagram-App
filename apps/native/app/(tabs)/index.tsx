@@ -1,74 +1,152 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import {
+  createUserInputSchema,
+  createUserInput,
+} from "@repo/api/src/db/types/inputSchemas";
+import { View, Text } from "react-native";
+import { Input, InputField } from "@/components/ui/input";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { trpc } from "@repo/api/src/clients/client";
+import { Button, ButtonText } from "@/components/ui/button";
+import { toast } from "sonner-native";
 
 export default function HomeScreen() {
+  const register = trpc.register.useMutation({
+    onError: (error) => {
+      console.log(error.message);
+
+      toast.error(error.message);
+    },
+  });
+
+  const {
+    control: registerControl,
+    handleSubmit: registerHandleSubmit,
+    formState: { errors: registerErrors },
+    setError: setRegisterError,
+  } = useForm<createUserInput>({
+    values: {
+      email: "Abdo.AlGhouul@gmail.com",
+      username: "Abdo.AlGhoul",
+      first_name: "Abdulrahman",
+      last_name: "AlGhoul",
+      password: "12345678",
+      confirmPassword: "12345678",
+    },
+    resolver: zodResolver(createUserInputSchema),
+  });
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+    <SafeAreaView className="flex-1">
+      <View className="flex-1 justify-center items-center gap-4 mx-4">
+        <Controller
+          control={registerControl}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input>
+              <InputField
+                id="email"
+                className="w-full border border-gray-400 p-2 rounded-lg"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+                placeholder="Email"
+              />
+            </Input>
+          )}
+          name="email"
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        {registerErrors.email ? (
+          <Text className="text-red-500 text-center">
+            {registerErrors.email.message}
+          </Text>
+        ) : null}
+
+        <Controller
+          control={registerControl}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input>
+              <InputField
+                id="username"
+                className="w-full border border-gray-400 p-2 rounded-lg"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+                placeholder="Username"
+              />
+            </Input>
+          )}
+          name="username"
+        />
+        {registerErrors.username ? (
+          <Text className="text-red-500 text-center">
+            {registerErrors.username.message}
+          </Text>
+        ) : null}
+
+        <Controller
+          control={registerControl}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input>
+              <InputField
+                id="first_name"
+                className="w-full border border-gray-400 p-2 rounded-lg"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+                placeholder="First Name"
+              />
+            </Input>
+          )}
+          name="first_name"
+        />
+        {registerErrors.first_name ? (
+          <Text className="text-red-500 text-center">
+            {registerErrors.first_name.message}
+          </Text>
+        ) : null}
+
+        <Controller
+          control={registerControl}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input>
+              <InputField
+                id="last_name"
+                className="w-full border border-gray-400 p-2 rounded-lg"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+                placeholder="Last Name"
+              />
+            </Input>
+          )}
+          name="last_name"
+        />
+        {registerErrors.last_name ? (
+          <Text className="text-red-500 text-center">
+            {registerErrors.last_name.message}
+          </Text>
+        ) : null}
+
+        <Button
+          className="ml-auto"
+          onPress={registerHandleSubmit((data) => register.mutate(data))}
+        >
+          <ButtonText className="text-typography-0">Register</ButtonText>
+        </Button>
+      </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
