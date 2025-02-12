@@ -10,11 +10,18 @@ module.exports = (() => {
 
   const { resolver } = config;
 
-  // 1. Watch all files within the monorepo
-  config.watchFolders = [monorepoRoot];
+  const monorepoPackages = {
+    "@repo/api": path.resolve(monorepoRoot, "packages/api"),
+  };
+
+  config.watchFolders = [projectRoot, ...Object.values(monorepoPackages)];
+
   // 2. Let Metro know where to resolve packages and in what order
   config.resolver = {
     ...resolver,
+    disableHierarchicalLookup: true,
+    unstable_enablePackageExports: true,
+    extraNodeModules: monorepoPackages,
     nodeModulesPaths: [
       path.resolve(projectRoot, "node_modules"),
       path.resolve(monorepoRoot, "node_modules"),
