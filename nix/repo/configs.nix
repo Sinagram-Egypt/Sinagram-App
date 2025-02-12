@@ -21,7 +21,7 @@ in {
         inherit (inputs) cells;
       }
       // {
-        commit.conventional.scopes = inputs.std.dmerge.append ["flake"];
+        commit.conventional.scopes = inputs.std.dmerge.append ["native" "api" "web" "nix"];
       };
   };
 
