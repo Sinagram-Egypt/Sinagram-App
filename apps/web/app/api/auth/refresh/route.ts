@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
           status: 200,
         },
       );
-    } catch (err) {
+    } catch {
       return new Response(
         JSON.stringify({
           status: "error",
