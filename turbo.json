@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["DATABASE_URL", "VERCEL_URL"],
+  "globalEnv": ["DATABASE_URL", "VERCEL_URL", "JWT_SECRET", "TOKEN_ISSUER"],
   "ui": "tui",
   "tasks": {
     "build": {
