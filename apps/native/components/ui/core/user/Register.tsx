@@ -25,7 +25,7 @@ export default function Register({ onSuccess }: { onSuccess: () => void }) {
     resolver: zodResolver(createUserInputSchema),
   });
 
-  const registerMutation = trpc.register.useMutation({
+  const registerMutation = trpc.user.add.useMutation({
     onError: (error) => toast.error(error.message),
     onSuccess: () => toast.success("Account was created successfully"),
   });
