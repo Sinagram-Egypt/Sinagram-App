@@ -27,6 +27,8 @@
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@repo/api": "*",
+    "@tanstack/react-query": "^5.66.0",
+    "@trpc/react-query": "^11.0.0-rc.764",
     "babel-plugin-module-resolver": "^5.0.2",
     "expo": "^52.0.33",
     "expo-blur": "~14.0.3",
