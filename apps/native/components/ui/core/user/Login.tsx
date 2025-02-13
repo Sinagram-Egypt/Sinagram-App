@@ -24,7 +24,7 @@ export default function Login() {
     resolver: zodResolver(loginInputSchema),
   });
 
-  const loginMutation = trpc.login.useMutation({
+  const loginMutation = trpc.auth.getSessionByEmailOrUsername.useMutation({
     onError: (error) => toast.error(error.message),
     onSuccess: (data) => {
       logIn(data);
