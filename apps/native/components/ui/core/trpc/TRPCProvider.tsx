@@ -1,6 +1,7 @@
 import { getQueryClient, trpc } from "@repo/api/client";
 import { useState } from "react";
 import { httpBatchLink, retryLink } from "@trpc/client";
+// @ts-ignore
 import superjson from "superjson";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { getJWT, useSession } from "@/components/AuthContext";
@@ -20,31 +21,35 @@ export function TRPCNativeProvider(
     trpc.createClient({
       links: [
         retryLink({
-          // @ts-ignore this has to be async
-          async retry(opts) {
+          retry(opts) {
             if (opts.error.data && opts.error.data.code === "UNAUTHORIZED") {
-              const session = getJWT();
-              const refreshResponse = await fetch(
-                "http://192.168.1.19:3000/api/auth/refresh",
-                {
-                  method: "POST",
-                  credentials: "include",
-                  headers: {
-                    "Content-Type": "application/json",
+              (async () => {
+                const session = getJWT();
+                const refreshResponse = await fetch(
+                  "http://192.168.1.19:3000/api/auth/refresh",
+                  {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      refreshToken: session?.refreshToken,
+                    }),
                   },
-                  body: JSON.stringify({
-                    refreshToken: session?.refreshToken,
-                  }),
-                },
-              );
+                );
 
-              if (!refreshResponse.ok || !session) logOut();
+                if (!refreshResponse.ok || !session) logOut();
 
-              const newSessionData = await refreshResponse.json();
-              const deserialized = superjson.parse(superjson.stringify(newSessionData.data));
-              logIn(deserialized as JWTPayload);
+                const newSessionData = await refreshResponse.json();
+                const deserialized = superjson.parse(
+                  superjson.stringify(newSessionData.data),
+                );
+                logIn(deserialized as JWTPayload);
+              })();
               return true;
             }
+
             if (
               opts.error.data &&
               opts.error.data.code !== "INTERNAL_SERVER_ERROR"
@@ -52,10 +57,12 @@ export function TRPCNativeProvider(
               // Don't retry on non-500s
               return false;
             }
+
             if (opts.op.type !== "query") {
               // Only retry queries
               return false;
             }
+
             // Retry up to 3 times
             return opts.attempts <= 3;
           },
