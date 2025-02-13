@@ -36,7 +36,7 @@ in {
         name = "Sinagram-App";
         inherit (import (inputs.self + /flake.nix)) description;
         homepage = "";
-        topics = ["Typescript" "ReactNative"];
+        topics = ["Typescript" "ReactNative" "FullStack"];
         default_branch = "master";
         allow_squash_merge = false;
         allow_merge_commit = false;
