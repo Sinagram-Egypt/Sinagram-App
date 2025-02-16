@@ -1899,6 +1899,13 @@
   dependencies:
     tslib "2"
 
+"@gluestack-ui/avatar@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@gluestack-ui/avatar/-/avatar-0.1.18.tgz#bb890a7b889060e01faf549f59a47d11c04ada1c"
+  integrity sha512-VA9XwtavYLYCWrjxHc2u9gRpV97cPRcr/6KJ4tLiMiQbiRL1b4zckiL+/F39fB6xjUOUQHl3Fjo/Yd8swa0MBg==
+  dependencies:
+    "@gluestack-ui/utils" "^0.1.14"
+
 "@gluestack-ui/button@^1.0.8":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@gluestack-ui/button/-/button-1.0.8.tgz#fb6c1a3e6c59561d0cd6e7d8d0f519034144c66d"
@@ -1907,6 +1914,11 @@
     "@gluestack-ui/utils" "0.1.14"
     "@react-native-aria/focus" "^0.2.9"
     "@react-native-aria/interactions" "0.2.13"
+
+"@gluestack-ui/divider@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@gluestack-ui/divider/-/divider-0.1.10.tgz#506ec45f9b5183a0e3b293dbff7b7da19edcfda8"
+  integrity sha512-/hZx1Rmy4Pgln9AwAprAEQcxYPEHjHSNF4xCUWlK/q0peyiMT5Nagt54VnxykVn5A0b2zg5QKP0pOqOF9xeE6w==
 
 "@gluestack-ui/form-control@^0.1.19":
   version "0.1.19"
