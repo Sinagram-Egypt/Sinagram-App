@@ -17,8 +17,8 @@ export default function Register({ onSuccess }: { onSuccess: () => void }) {
     values: {
       email: "Abdo.AlGhouul@gmail.com",
       username: "Abdo.AlGhoul",
-      first_name: "Abdulrahman",
-      last_name: "AlGhoul",
+      firstName: "Abdulrahman",
+      lastName: "AlGhoul",
       password: "12345678",
       confirmPassword: "12345678",
     },
@@ -94,7 +94,7 @@ export default function Register({ onSuccess }: { onSuccess: () => void }) {
         render={({ field: { onChange, onBlur, value } }) => (
           <Input>
             <InputField
-              id="first_name"
+              id="firstName"
               className="w-full border border-gray-400 p-2 rounded-lg"
               onChangeText={onChange}
               onBlur={onBlur}
@@ -103,11 +103,11 @@ export default function Register({ onSuccess }: { onSuccess: () => void }) {
             />
           </Input>
         )}
-        name="first_name"
+        name="firstName"
       />
-      {registerErrors.first_name ? (
+      {registerErrors.firstName ? (
         <Text className="text-red-500 text-center">
-          {registerErrors.first_name.message}
+          {registerErrors.firstName.message}
         </Text>
       ) : null}
 
@@ -119,7 +119,7 @@ export default function Register({ onSuccess }: { onSuccess: () => void }) {
         render={({ field: { onChange, onBlur, value } }) => (
           <Input>
             <InputField
-              id="last_name"
+              id="lastName"
               className="w-full border border-gray-400 p-2 rounded-lg"
               onChangeText={onChange}
               onBlur={onBlur}
@@ -128,11 +128,11 @@ export default function Register({ onSuccess }: { onSuccess: () => void }) {
             />
           </Input>
         )}
-        name="last_name"
+        name="lastName"
       />
-      {registerErrors.last_name ? (
+      {registerErrors.lastName ? (
         <Text className="text-red-500 text-center">
-          {registerErrors.last_name.message}
+          {registerErrors.lastName.message}
         </Text>
       ) : null}
 
