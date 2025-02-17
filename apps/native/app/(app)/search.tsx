@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Input, InputField } from "@/components/ui/input";
 import { useState } from "react";
 import { trpc } from "@repo/api/client";
-import { FlatList, View, Text } from "react-native";
+import { FlatList, View, Text, ActivityIndicator } from "react-native";
 import { Link } from "expo-router";
 import {
   Avatar,
@@ -31,6 +31,12 @@ export default function Profile() {
             placeholder="Search for a user..."
           />
         </Input>
+        {users.isLoading && <ActivityIndicator size="large" className="mt-4" />}
+        {users.isError && (
+          <View className="bg-black/50 self-center px-4 mt-2">
+            <Text className="text-red-500 text-center">An error occurred</Text>
+          </View>
+        )}
         <FlatList
           className="mx-4"
           data={users.data}
